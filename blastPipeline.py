@@ -31,7 +31,7 @@ save_text.close()
 #from blast_accession.txt use eFetch to download a fasta file of all the accessions
 #first uploading the list of IDs using EPost
 #can refer to the long list of IDs and download the associated data with EFetch
-Entrez.email = "tpaisie@ufl.edu"  #enter email here
+Entrez.email = input(str(">"))  #enter email here
 id_list = open("blast_accession.txt")
 
 accessions = []
