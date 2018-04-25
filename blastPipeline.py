@@ -39,21 +39,18 @@ for line in id_list:
     line = line.strip()
     accessions.append(line)
 
-gb_output = open(sys.argv[2]+".gb", "w")
-for gb_num in accessions:
-    handle = Entrez.efetch(db="nucleotide", id=gb_num, rettype="gb", retmode="text")
-    gb_seqs = SeqIO.parse(handle, "gb")
-    SeqIO.write(gb_seqs, gb_output, "gb")
-handle.close()
-gb_output.close()
+with open(sys.argv[2]+".gb", "w") as gb_output:
+    for gb_num in accessions:
+        with Entrez.efetch(db="nucleotide", id=gb_num, rettype="gb", retmode="text") as handle:
+            gb_output.write(handle.read())
+            handle.close()
 
-fasta_output = open(sys.argv[2]+".fasta", "w")
-for num in accessions:
-    handle = Entrez.efetch(db="nucleotide", id=num, rettype="fasta")
-    fasta_seqs = SeqIO.parse(handle, "fasta")
-    SeqIO.write(fasta_seqs, fasta_output, "fasta")
-handle.close()
-fasta_output.close()
+with open(sys.argv[2]+".fasta", "w") as fasta_output:
+    for num in accessions:
+        with Entrez.efetch(db="nucleotide", id=num, rettype="fasta") as handle:
+            fasta_output.write(handle.read())
+            handle.close()
+
 #genbank and fasta file are now downloaded
 
 #extract country and collection date from genbank file
